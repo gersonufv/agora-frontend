@@ -47,7 +47,6 @@ export default function LancamentosMes() {
 
       {/* Botões de ação */}
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "20px" }}>
-        {/* <button onClick={() => alert("Adicionar lançamento")}>➕ Adicionar</button> */}
         <button onClick={() => setModalAdicionar(true)}>➕ Adicionar</button>
         <button onClick={() => alert("Duplicar mês anterior")}>🔁 Duplicar mês anterior</button>
         <button onClick={() => alert("Preencher valores padrão")}>⭐ Preencher padrão</button>
@@ -82,15 +81,17 @@ export default function LancamentosMes() {
           </tbody>
         </table>
       )}
+
+      {/* Modal dentro do container */}
+      <Modal open={modalAdicionar} onClose={() => setModalAdicionar(false)}>
+        <FormAdicionarLancamento
+          mesAno={mesAno}
+          onSalvo={() => {
+            setModalAdicionar(false);
+            carregarLancamentos();
+          }}
+        />
+      </Modal>
     </div>
-    <Modal open={modalAdicionar} onClose={() => setModalAdicionar(false)}>
-  <FormAdicionarLancamento
-    mesAno={mesAno}
-    onSalvo={() => {
-      setModalAdicionar(false);
-      carregarLancamentos();
-    }}
-  />
-</Modal>
   );
 }
