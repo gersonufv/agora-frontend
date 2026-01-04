@@ -8,6 +8,7 @@ import Lancamentos from "./pages/Lancamentos";
 import Estatisticas from "./pages/Estatisticas";
 import Alertas from "./pages/Alertas";
 import Configuracoes from "./pages/Configuracoes";
+import LancamentosMes from "./pages/LancamentosMes";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/estatisticas" element={<Estatisticas />} />
           <Route path="/alertas" element={<Alertas />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
+          <Route path="/lancamentos-mes" element={<LancamentosMes />} />
         </Routes>
       </Layout>
     </BrowserRouter>
