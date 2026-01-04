@@ -11,6 +11,7 @@ export default function Sidebar() {
         <Link to="/estatisticas">Estatísticas</Link>
         <Link to="/alertas">Alertas</Link>
         <Link to="/configuracoes">Configurações</Link>
+        <Link to="/lancamentos-mes">Lançamentos do Mês</Link>
       </nav>
     </aside>
   );
