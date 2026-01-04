@@ -5,6 +5,9 @@ import variavelService from "../services/variavelService";
 import Modal from "../components/Shared/Modal";
 import FormAdicionarLancamento from "../components/Lancamentos/FormAdicionarLancamento";
 import ModalDuplicarMes from "../components/Lancamentos/ModalDuplicarMes";
+import ModalChecklistMes from "../components/Lancamentos/ModalChecklistMes";
+import ModalPreencherPadrao from "../components/Lancamentos/ModalPreencherPadrao";
+import ModalImportarPlanilha from "../components/Lancamentos/ModalImportarPlanilha";
 
 export default function LancamentosMes() {
   const [mesAno, setMesAno] = useState(() => {
@@ -16,6 +19,9 @@ export default function LancamentosMes() {
   const [carregando, setCarregando] = useState(false);
   const [modalAdicionar, setModalAdicionar] = useState(false);
   const [modalDuplicar, setModalDuplicar] = useState(false);
+  const [modalChecklist, setModalChecklist] = useState(false);
+  const [modalPadrao, setModalPadrao] = useState(false);
+  const [modalImportar, setModalImportar] = useState(false);
 
   async function carregarLancamentos() {
     try {
@@ -55,6 +61,11 @@ export default function LancamentosMes() {
         <button onClick={() => alert("Checklist do mês")}>📝 Checklist</button>
         <button onClick={() => alert("Importar planilha")}>📄 Importar planilha</button>
         <button onClick={() => setModalDuplicar(true)}>🔁 Duplicar mês anterior</button>
+        <button onClick={() => setModalAdicionar(true)}>➕ Adicionar</button>
+        <button onClick={() => setModalDuplicar(true)}>🔁 Duplicar mês anterior</button>
+        <button onClick={() => setModalPadrao(true)}>⭐ Preencher padrão</button>
+        <button onClick={() => setModalChecklist(true)}>📝 Checklist do mês</button>
+        <button onClick={() => setModalImportar(true)}>📄 Importar planilha</button>
       </div>
 
       {/* Lista de lançamentos */}
@@ -95,16 +106,51 @@ export default function LancamentosMes() {
           }}
         />
       </Modal>
-    <Modal open={modalDuplicar} onClose={() => setModalDuplicar(false)}>
-      <ModalDuplicarMes
-        mesAtual={mesAno}
-        onClose={() => setModalDuplicar(false)}
-        onDuplicado={() => {
-        setModalDuplicar(false);
-        carregarLancamentos();
-        }}
-      />
-    </Modal>
+    
+      <Modal open={modalDuplicar} onClose={() => setModalDuplicar(false)}>
+        <ModalDuplicarMes
+          mesAtual={mesAno}
+          onClose={() => setModalDuplicar(false)}
+          onDuplicado={() => {
+            setModalDuplicar(false);
+            carregarLancamentos();
+          }}
+        />
+      </Modal>
+
+<Modal open={modalChecklist} onClose={() => setModalChecklist(false)}>
+  <ModalChecklistMes
+    mesAtual={mesAno}
+    onClose={() => setModalChecklist(false)}
+    onConcluido={() => {
+      setModalChecklist(false);
+      carregarLancamentos();
+    }}
+  />
+</Modal>
+
+<Modal open={modalPadrao} onClose={() => setModalPadrao(false)}>
+  <ModalPreencherPadrao
+    mesAtual={mesAno}
+    onClose={() => setModalPadrao(false)}
+    onConcluido={() => {
+      setModalPadrao(false);
+      carregarLancamentos();
+    }}
+  />
+</Modal>
+
+<Modal open={modalImportar} onClose={() => setModalImportar(false)}>
+  <ModalImportarPlanilha
+    mesAtual={mesAno}
+    onClose={() => setModalImportar(false)}
+    onImportado={() => {
+      setModalImportar(false);
+      carregarLancamentos();
+    }}
+  />
+</Modal>
+      
     </div>
   );
 }
