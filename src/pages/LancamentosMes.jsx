@@ -4,6 +4,7 @@ import categoriaService from "../services/categoriaService";
 import variavelService from "../services/variavelService";
 import Modal from "../components/Shared/Modal";
 import FormAdicionarLancamento from "../components/Lancamentos/FormAdicionarLancamento";
+import ModalDuplicarMes from "../components/Lancamentos/ModalDuplicarMes";
 
 export default function LancamentosMes() {
   const [mesAno, setMesAno] = useState(() => {
@@ -14,6 +15,7 @@ export default function LancamentosMes() {
   const [lancamentos, setLancamentos] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [modalAdicionar, setModalAdicionar] = useState(false);
+  const [modalDuplicar, setModalDuplicar] = useState(false);
 
   async function carregarLancamentos() {
     try {
@@ -52,6 +54,7 @@ export default function LancamentosMes() {
         <button onClick={() => alert("Preencher valores padrão")}>⭐ Preencher padrão</button>
         <button onClick={() => alert("Checklist do mês")}>📝 Checklist</button>
         <button onClick={() => alert("Importar planilha")}>📄 Importar planilha</button>
+        <button onClick={() => setModalDuplicar(true)}>🔁 Duplicar mês anterior</button>
       </div>
 
       {/* Lista de lançamentos */}
@@ -92,6 +95,16 @@ export default function LancamentosMes() {
           }}
         />
       </Modal>
+    <Modal open={modalDuplicar} onClose={() => setModalDuplicar(false)}>
+      <ModalDuplicarMes
+        mesAtual={mesAno}
+        onClose={() => setModalDuplicar(false)}
+        onDuplicado={() => {
+        setModalDuplicar(false);
+        carregarLancamentos();
+        }}
+      />
+    </Modal>
     </div>
   );
 }
