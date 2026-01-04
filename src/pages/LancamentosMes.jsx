@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import lancamentoService from "../services/lancamentoService";
 import categoriaService from "../services/categoriaService";
 import variavelService from "../services/variavelService";
+import Modal from "../components/Shared/Modal";
+import FormAdicionarLancamento from "../components/Lancamentos/FormAdicionarLancamento";
 
 export default function LancamentosMes() {
   const [mesAno, setMesAno] = useState(() => {
@@ -11,6 +13,7 @@ export default function LancamentosMes() {
 
   const [lancamentos, setLancamentos] = useState([]);
   const [carregando, setCarregando] = useState(false);
+  const [modalAdicionar, setModalAdicionar] = useState(false);
 
   async function carregarLancamentos() {
     try {
@@ -44,7 +47,8 @@ export default function LancamentosMes() {
 
       {/* Botões de ação */}
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "20px" }}>
-        <button onClick={() => alert("Adicionar lançamento")}>➕ Adicionar</button>
+        {/* <button onClick={() => alert("Adicionar lançamento")}>➕ Adicionar</button> */}
+        <button onClick={() => setModalAdicionar(true)}>➕ Adicionar</button>
         <button onClick={() => alert("Duplicar mês anterior")}>🔁 Duplicar mês anterior</button>
         <button onClick={() => alert("Preencher valores padrão")}>⭐ Preencher padrão</button>
         <button onClick={() => alert("Checklist do mês")}>📝 Checklist</button>
@@ -79,5 +83,14 @@ export default function LancamentosMes() {
         </table>
       )}
     </div>
+    <Modal open={modalAdicionar} onClose={() => setModalAdicionar(false)}>
+  <FormAdicionarLancamento
+    mesAno={mesAno}
+    onSalvo={() => {
+      setModalAdicionar(false);
+      carregarLancamentos();
+    }}
+  />
+</Modal>
   );
 }
